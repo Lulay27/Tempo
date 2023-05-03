@@ -63,6 +63,12 @@ const updateRound = async (req, res) => {
   }
 
   const round = await Round.findOneAndUpdate({ _id: id }, { ...req.body });
+
+  if (!round) {
+    return res.status(404).json({ error: 'No such round' });
+  }
+
+  res.status(200).json(round);
 };
 
 module.exports = {
