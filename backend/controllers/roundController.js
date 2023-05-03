@@ -17,7 +17,7 @@ const getSingleRound = async (req, res) => {
     return res.status(404).json({ error: 'No such round' });
   }
 
-  const round = await Round.findById(id);
+  const round = await Round.findOne({ _id: id });
 
   if (!round) {
     return res.status(404).json({ error: 'No such round' });
@@ -38,11 +38,37 @@ const createRound = async (req, res) => {
 };
 
 // delete a round
+const deleteRound = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such round' });
+  }
+
+  const round = await Round.findByIdAndDelete(id);
+
+  if (!round) {
+    return res.status(404).json({ error: 'No such round' });
+  }
+
+  res.status(200).json(round);
+};
 
 // update a round
+const updateRound = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such round' });
+  }
+
+  const round = await Round.findOneAndUpdate({ _id: id }, { ...req.body });
+};
 
 module.exports = {
   getAllRounds,
   getSingleRound,
   createRound,
+  deleteRound,
+  updateRound,
 };
