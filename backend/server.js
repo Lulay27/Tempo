@@ -1,8 +1,8 @@
 require('dotenv').config();
-
 const express = require('express');
 const mongoose = require('mongoose');
-// const roundsRoutes = require('./routes/rounds');
+
+const roundsRoutes = require('./routes/rounds');
 
 // express app
 const app = express();
@@ -14,10 +14,11 @@ app.use(express.json());
 // displays every req type and path made to server
 app.use((req, res, next) => {
   console.log(req.method, req.path);
+  next();
 });
 
 // routes
-// app.use('/api/rounds', roundsRoutes);
+app.use('/api/rounds', roundsRoutes);
 
 // connecting to mongodb and port
 mongoose

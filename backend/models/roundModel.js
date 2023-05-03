@@ -9,7 +9,7 @@ const roundSchema = new Schema(
       required: true,
     },
     score: {
-      type: Integer,
+      type: Number,
       required: true,
     },
     date: {
